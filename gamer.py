@@ -4,6 +4,15 @@ from bs4 import BeautifulSoup
 import re
 import xml
 import codecs, json
+
+
+def cleanhtml(raw_html):
+	cleanr = re.compile('<.*?>')
+	cleantext = re.sub(cleanr, '', raw_html)
+	return cleantext
+def remove_tags(text):
+    return ''.join(xml.etree.ElementTree.fromstring(text).itertext())
+    
 page = 1 # start at page1
 '''
 used to save the data first in the memory
@@ -32,12 +41,7 @@ while (page<10): #the value determines the pages you want to crawl
 
 	i=0
 
-	def cleanhtml(raw_html):
-		cleanr = re.compile('<.*?>')
-		cleantext = re.sub(cleanr, '', raw_html)
-		return cleantext
-	def remove_tags(text):
-	    return ''.join(xml.etree.ElementTree.fromstring(text).itertext())
+
 
 	for game_a in game_list[0].find_all('a'):   #for the information of pop
 		if i%2==0 : # cause the second href is the target href not the first one
@@ -66,9 +70,9 @@ while (page<10): #the value determines the pages you want to crawl
 
 	for info in data_info :
 		print(data_name[i])
-		info_temp = info.split(u"昨日人氣：")[1]
-		data_yesterday_popularity.append(info_temp.split(u"| 昨日文章：")[0])
-		data_yesterday_articles.append(info_temp.split(u"| 昨日文章：")[1])
+		info_temp = info.split(u"?�日人氣�?)[1]
+		data_yesterday_popularity.append(info_temp.split(u"| ?�日?��?�?)[0])
+		data_yesterday_articles.append(info_temp.split(u"| ?�日?��?�?)[1])
 		print(data_yesterday_popularity[i])
 		print(data_yesterday_articles[i])
 		print(data_type[i])
